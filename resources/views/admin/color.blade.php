@@ -49,7 +49,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('color.store')}}" method="POST" class="form-horizontal form-label-right">
+                        <form action="{{ route('colors.store')}}" method="POST" class="form-horizontal form-label-right">
                         {{ csrf_field() }}
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Name</label>

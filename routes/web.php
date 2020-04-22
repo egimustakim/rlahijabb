@@ -38,7 +38,7 @@ Route::get('rlaadmin', 'RlaadminController@index')->name('rlaadmin');
 
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::resource('color', 'ColorController');
+    Route::resource('colors', 'ColorController');
 
     Route::resource('brands', 'BrandsController');
 

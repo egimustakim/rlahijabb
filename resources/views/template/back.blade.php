@@ -58,7 +58,7 @@
                     <ul class="nav child_menu">
                       <li><a href="products">Products</a></li>
                       <li><a href="categories">Categories</a></li>
-                      <li><a href="color">Color</a></li>
+                      <li><a href="colors">Color</a></li>
                       <li><a href="#">Materials</a></li>
                       <li><a href="brands">Brands</a></li>
                     </ul>

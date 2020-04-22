@@ -14,7 +14,8 @@ class BrandsController extends Controller
      */
     public function index()
     {
-        //
+        $brands = Brands::all();
+        return view('admin/brand', compact('brands'));
     }
 
     /**
@@ -35,7 +36,18 @@ class BrandsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $brands = New Brands;
+        $brands->name = $request->brandName;
+        if ($brands->save())
+        {
+            $request->session()->flash('alert-success', 'Brand was successful added!');
+            return redirect('brands');
+        }
+        else
+        {
+            $request->session()->flash('alert-info', 'Brand was failed added!');
+            return redirect('brands');
+        }
     }
 
     /**

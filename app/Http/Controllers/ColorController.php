@@ -41,12 +41,12 @@ class ColorController extends Controller
         if ($color->save())
         {
             $request->session()->flash('alert-success', 'Color was successful added!');
-            return redirect('color');
+            return redirect('colors');
         }
         else
         {
             $request->session()->flash('alert-info', 'Color was failed added!');
-            return redirect('color');
+            return redirect('colors');
         }
     }
 
