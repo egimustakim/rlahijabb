@@ -8,7 +8,8 @@ class Materials extends Model
 {
     protected $fillable = ['name'];
 
-    public function setNameAttribute($value) {
-        $this->setNameAttribute['name'] = strtoupper($value);
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtoupper($value);
     }
 }

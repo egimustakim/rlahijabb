@@ -11,7 +11,7 @@
     <div class="">
       <div class="page-title">
         <div class="title_left">
-          <h3>Brand Data Table</h3>
+          <h3>Materials Data Table</h3>
         </div>
 
         <div class="title_right">
@@ -43,18 +43,18 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Add New Brand</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Add New Materials</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('brands.store') }}" method="POST" class="form-horizontal form-label-right">
+                        <form action="{{ route('materials.store') }}" method="POST" class="form-horizontal form-label-right">
                         {{ csrf_field() }}
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Brand Name</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Material Name</label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                <input type="text" class="form-control" name="brandName" placeholder="Brand Name">
+                                <input type="text" class="form-control" name="materialName" placeholder="Material Name">
                             </div>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="x_panel">
             <div class="x_title">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Add New Brand</button>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Add New Material</button>
               <ul class="nav navbar-right panel_toolbox">
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                 </li>
@@ -101,10 +101,10 @@
                     </thead>
                     <tbody>
                         <?php $no = 1 ?>
-                        @foreach ($brands as $brand)
+                        @foreach ($materials as $material)
                         <tr>
                             <td>{{ $no }}</td>
-                            <td>{{ $brand['name'] }}</td>
+                            <td>{{ $material['name'] }}</td>
                             <td>Edit</td>
                             <td>Delete</td>
                         </tr>

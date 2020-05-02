@@ -42,8 +42,22 @@ class CategoriesController extends Controller
         $categories = New Categories();
         $categories->name = $request->inputName;
         $categories->parent_id = $request->parentCat;
-        if($categories->save())
-        return redirect('categories');
+        $count = Categories::where('name', '=' ,$request->inputName)->where('parent_id', '=' ,$request->parentCat)->first();
+        if ($count)
+        {
+            $request->session()->flash('alert-info', 'Category name is exist!');
+            return redirect('categories');
+        }
+        if ($categories->save())
+        {
+            $request->session()->flash('alert-success', 'Category was successful added!');
+            return redirect('categories');
+        }
+        else
+        {
+            $request->session()->flash('alert-info', 'Category was failed added!');
+            return redirect('categories');
+        }
     }
     /**
      * Display the specified resource.
