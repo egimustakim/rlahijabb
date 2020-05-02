@@ -6,5 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Materials extends Model
 {
-    protected $fillable = ['material_name'];
+    protected $fillable = ['name'];
+
+    public function setNameAttribute($value) {
+        $this->setNameAttribute['name'] = strtoupper($value);
+    }
 }

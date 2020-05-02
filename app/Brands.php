@@ -10,6 +10,7 @@ class Brands extends Model
 
     public function setNameAttribute($value)
     {
-        $this->attributes['brand_name'] = strtoupper($value);
+        $this->attributes['name'] = strtoupper($value);
+
     }
 }
