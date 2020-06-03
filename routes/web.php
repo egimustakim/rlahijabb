@@ -42,6 +42,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('brands', 'BrandsController');
 
+    Route::resource('colors', 'ColorController');
+
     Route::resource('materials', 'MaterialsController');
 
     Route::get('provinces', 'CountryController@provinces');

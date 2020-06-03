@@ -68,6 +68,67 @@
         </div>
         <!-- Modal Add Category-->
 
+        <!-- Modal Edit Material-->
+        <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Edit Color</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('colors.update', 'update') }}" method="post" class="form-horizontal form-label-right">
+                        {{ method_field('patch')}}
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Material Name</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                <input type="hidden" class="form-control" name="materialId" id="mat_id">
+                                <input type="text" class="form-control" name="materialName" id="mat_name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Edit Material-->
+
+          <!-- Modal Delete Material-->
+          <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLongTitle">Delete Color</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">
+                          <form action="{{ route('colors.destroy', 'delete') }}" method="post" class="form-horizontal form-label-right">
+                          {{ method_field('delete')}}
+                          {{ csrf_field() }}
+                          <div class="form-group">
+                              <p>Are you sure want to delete this data?</p>
+                              <input type="hidden" class="form-control" name="materialId" id="mate_id">
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                          <button type="submit" class="btn btn-danger">Delete</button>
+                      </div>
+                          </form>
+                  </div>
+              </div>
+          </div>
+          <!-- Modal Delete Material-->
+
       <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="x_panel">
@@ -111,8 +172,8 @@
                             <td>{{ $no }}</td>
                             <td>{{ $color['name']}}</td>
                             <td></td>
-                            <td class="text-center">Edit</td>
-                            <td class="text-center">Delete</td>
+                            <td class="text-center"><button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEdit" data-colname="{{ $color['name']}}" data-colid="{{ $color['id']}}">Edit</button></td>
+                            <td class="text-center"><button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalDelete" data-colid="{{ $color['id']}}">Delete</button></td>
                         </tr>
                         <?php $no++ ?>
                         @endforeach

@@ -14,7 +14,7 @@ class MaterialsController extends Controller
      */
     public function index()
     {
-        $materials = Materials::all();
+        $materials = Materials::orderBy('name', 'ASC')->get();
         return view('admin/material', compact('materials'));
     }
 
@@ -38,13 +38,13 @@ class MaterialsController extends Controller
     {
         $materials = New Materials;
         $materials->name = $request->materialName;
-        $count = Materials::where('name', '=' ,$request->materialName);
+        $count = Materials::where('name', '=' ,$request->materialName)->first();
         if ($count)
         {
             $request->session()->flash('alert-info', 'Material name is exist!');
             return redirect('materials');
         }
-        if ($materials->save())
+        elseif ($materials->save())
         {
             $request->session()->flash('alert-success', 'Material was successful added!');
             return redirect('materials');
@@ -85,9 +85,27 @@ class MaterialsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $materials = Materials::findOrFail($request->materialId);
+        $materials->name = $request->materialName;
+        $count = Materials::where('name', '=' ,$request->materialName)->first();
+        if ($count)
+        {
+            $request->session()->flash('alert-info', 'Material name is exist!');
+            return redirect('materials');
+        }
+        elseif ($materials->update())
+        {
+            $request->session()->flash('alert-success', 'Material was successful added!');
+            return redirect('materials');
+        }
+        else
+        {
+            $request->session()->flash('alert-info', 'Material was failed added!');
+            return redirect('materials');
+        }
+        return redirect('materials');
     }
 
     /**
@@ -96,8 +114,18 @@ class MaterialsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $materials = Materials::findOrFail($request->materialId);
+        if ($materials->delete())
+        {
+            $request->session()->flash('alert-success', 'Material was successful deleted!');
+            return redirect('materials');
+        }
+        else
+        {
+            $request->session()->flash('alert-info', 'Material was failed deleted!');
+            return redirect('materials');
+        }
     }
 }

@@ -78,38 +78,66 @@
             </div>
             <!-- Modal Add Category-->
 
-            <!-- Modal Edit Sub Category-->
-            <div class="modal fade" id="editCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
+            <!-- Modal Edit Category-->
+        <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Update Categories Name</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Edit Color</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{route('categories.update', 'update')}}" method="POST" class="form-horizontal form-label-left">
-                        {{method_field('patch')}}
-                            {{ csrf_field() }}
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Name</label>
-                                <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <input type="hidden" class="form-control" id="inputcatid" name="idcat">
-                                    <input type="text" class="form-control" id="inputcat" name="inputName" placeholder="Categories Name">
-                                </div>
+                        <form action="{{ route('categories.update', 'update') }}" method="post" class="form-horizontal form-label-right">
+                        {{ method_field('patch')}}
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Material Name</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                <input type="hidden" class="form-control" name="categoryId" id="cat_id">
+                                <input type="text" class="form-control" name="categoryName" id="cat_name">
                             </div>
-
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                         </form>
                 </div>
-                </div>
             </div>
-            <!-- Modal Edit Category-->
+        </div>
+        <!-- Modal Edit Category-->
+
+          <!-- Modal Delete Category-->
+          <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLongTitle">Delete Color</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">
+                          <form action="{{ route('categories.destroy', 'delete') }}" method="post" class="form-horizontal form-label-right">
+                          {{ method_field('delete')}}
+                          {{ csrf_field() }}
+                          <div class="form-group">
+                              <p>Are you sure want to delete this data?</p>
+                              <input type="hidden" class="form-control" name="categoryId" id="cate_id">
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                          <button type="submit" class="btn btn-danger">Delete</button>
+                      </div>
+                          </form>
+                  </div>
+              </div>
+          </div>
+          <!-- Modal Delete Category-->
 
           <div class="clearfix"></div>
 
@@ -159,8 +187,8 @@
                         {{ $item['name'] }}
                         @endforeach
                         </td>
-                        <td class="text-center"><button type="button" class="btn btn-info btn-sm" disabled>Edit</button></td>
-                        <td class="text-center"><button type="button" class="btn btn-danger btn-sm" disabled>Delete</button></td>
+                        <td class="text-center"><button type="button" class="btn btn-info btn-sm" data-catname="{{ $cat['name'] }}" data-catid="{{ $cat['id'] }}" data-toggle="modal" data-target="#modalEdit">Edit</button></td>
+                        <td class="text-center"><button type="button" class="btn btn-danger btn-sm" data-matid="{{ $cat['id'] }}" data-toggle="modal" data-target="#modalDelete">Delete</button></td>
                       </tr>
                     <?php $no++ ?>
                     @endforeach
@@ -179,23 +207,31 @@
 <script src="../vendors/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
-{{-- <script>
+<script>
 $(document).ready(function() {
     $('table.display').DataTable();
 } );
-</script> --}}
+</script>
 
 <script>
-$('#editCategory').on('show.bs.modal', function (event) {
-  console.log('modal open')
-  var button = $(event.relatedTarget) // Button that triggered the modal
-  var recipient = button.data('catname')
-  var cat_id = button.data('catid') // Extract info from data-* attributes
-  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-  var modal = $(this)
-  modal.find('.modal-body #inputcat').val(recipient);
-  modal.find('.modal-body #inputcatid').val(cat_id);
+$('#modalEdit').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var cat_name = button.data('catname') // Extract info from data-* attributes
+    var cat_id = button.data('catid')
+    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    var modal = $(this)
+    modal.find('.modal-body #cat_name').val(cat_name)
+    modal.find('.modal-body #cat_id').val(cat_id)
+})
+
+$('#modalDelete').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var cate_id = button.data('catid') // Extract info from data-* attributes
+    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    var modal = $(this)
+    modal.find('.modal-body #cate_id').val(cate_id)
 })
 </script>
 

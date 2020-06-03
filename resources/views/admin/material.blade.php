@@ -38,8 +38,8 @@
         @endforeach
       </div> <!-- end .flash-message -->
 
-      <!-- Modal Add Category-->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <!-- Modal Add Material-->
+        <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -66,13 +66,74 @@
                 </div>
             </div>
         </div>
-        <!-- Modal Add Category-->
+        <!-- Modal Add Material-->
+
+        <!-- Modal Edit Material-->
+        <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Edit Materials</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <form action="{{ route('materials.update', 'update') }}" method="post" class="form-horizontal form-label-right">
+                      {{ method_field('patch')}}
+                      {{ csrf_field() }}
+                      <div class="form-group">
+                          <label class="control-label col-md-3 col-sm-3 col-xs-12">Material Name</label>
+                          <div class="col-md-9 col-sm-9 col-xs-12">
+                              <input type="hidden" class="form-control" name="materialId" id="mat_id">
+                              <input type="text" class="form-control" name="materialName" id="mat_name">
+                          </div>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                      <button type="submit" class="btn btn-primary">Update</button>
+                  </div>
+                      </form>
+              </div>
+          </div>
+      </div>
+      <!-- Modal Edit Material-->
+
+        <!-- Modal Delete Material-->
+        <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Delete Materials</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('materials.destroy', 'delete') }}" method="post" class="form-horizontal form-label-right">
+                        {{ method_field('delete')}}
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <p>Are you sure want to delete this data?</p>
+                            <input type="hidden" class="form-control" name="materialId" id="mate_id">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Delete Material-->
 
       <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="x_panel">
             <div class="x_title">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Add New Material</button>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modalAdd">Add New Material</button>
               <ul class="nav navbar-right panel_toolbox">
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                 </li>
@@ -96,7 +157,8 @@
                       <tr>
                         <th>No</th>
                         <th>Name</th>
-                        <th colspan="2">Edit</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -105,8 +167,8 @@
                         <tr>
                             <td>{{ $no }}</td>
                             <td>{{ $material['name'] }}</td>
-                            <td>Edit</td>
-                            <td>Delete</td>
+                            <td><button class="btn btn-info btn-sm" data-matname="{{ $material['name'] }}" data-matid="{{ $material['id'] }}" data-toggle="modal" data-target="#modalEdit">Edit</button></td>
+                            <td><button class="btn btn-danger btn-sm" data-matid="{{ $material['id'] }}" data-toggle="modal" data-target="#modalDelete">Delete</button></a></td>
                         </tr>
                         <?php $no++ ?>
                         @endforeach
@@ -129,10 +191,30 @@
 <script src="../vendors/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
-{{-- <script>
+<script>
 $(document).ready(function() {
     $('#datatableOngkir').DataTable();
 } );
-</script> --}}
+</script>
+<script>
+$('#modalEdit').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var mat_name = button.data('matname') // Extract info from data-* attributes
+    var mat_id = button.data('matid')
+    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    var modal = $(this)
+    modal.find('.modal-body #mat_name').val(mat_name)
+    modal.find('.modal-body #mat_id').val(mat_id)
+})
 
+$('#modalDelete').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var mate_id = button.data('matid') // Extract info from data-* attributes
+    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    var modal = $(this)
+    modal.find('.modal-body #mate_id').val(mate_id)
+})
+</script>
 @endsection
