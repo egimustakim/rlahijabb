@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Categories;
-use App\SubCategory;
-use App\SubSubCategory;
-use App\SubSubSubCategory;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -90,11 +87,18 @@ class CategoriesController extends Controller
      */
     public function update(Request $request)
     {
-        $cateogry = SubCategory::findOrFail($request->idcat);
-        $category = New SubCategory;
-        $category->name = $request->inputName;
-        $category->save();
-        return back();
+        $categories = Categories::findOrFail($request->categoryId);
+        $categories->name = $request->categoryName;
+        if($categories->update())
+        {
+            $request->session()->flash('alert-success', 'Category was successful added!');
+            return back();
+        }
+        else
+        {
+            $request->session()->flash('alert-info', 'Category was failed added!');
+            return back();
+        }
     }
 
     /**
@@ -103,9 +107,19 @@ class CategoriesController extends Controller
      * @param  \App\Categories  $categories
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Categories $categories)
+    public function destroy(Request $request)
     {
-        //
+        $categories = Categories::findOrFail($request->categoryId);
+        if($categories->delete())
+        {
+            $request->session()->flash('alert-success', 'Category deleted!');
+            return back();
+        }
+        else
+        {
+            $request->session()->flash('alert-info', 'Category delete failed!');
+            return back();
+        }
     }
 
     public function subcategoriesstore (Request $request)

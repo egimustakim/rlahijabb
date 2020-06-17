@@ -188,7 +188,7 @@
                         @endforeach
                         </td>
                         <td class="text-center"><button type="button" class="btn btn-info btn-sm" data-catname="{{ $cat['name'] }}" data-catid="{{ $cat['id'] }}" data-toggle="modal" data-target="#modalEdit">Edit</button></td>
-                        <td class="text-center"><button type="button" class="btn btn-danger btn-sm" data-matid="{{ $cat['id'] }}" data-toggle="modal" data-target="#modalDelete">Delete</button></td>
+                        <td class="text-center"><button type="button" class="btn btn-danger btn-sm" data-catid="{{ $cat['id'] }}" data-toggle="modal" data-target="#modalDelete">Delete</button></td>
                       </tr>
                     <?php $no++ ?>
                     @endforeach
