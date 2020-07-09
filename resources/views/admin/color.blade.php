@@ -54,7 +54,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Name</label>
                                 <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <input class="form-control" type="text" name="colorName" placeholder="Fill color name here ...">
+                                    <input class="form-control" type="text" name="colorname" placeholder="Fill color name here ...">
                                 </div>
                             </div>
                     </div>
@@ -85,8 +85,8 @@
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Material Name</label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                <input type="hidden" class="form-control" name="materialId" id="mat_id">
-                                <input type="text" class="form-control" name="materialName" id="mat_name">
+                                <input type="hidden" class="form-control" name="colorid" id="col_id">
+                                <input type="text" class="form-control" name="colorname" id="col_name">
                             </div>
                         </div>
                     </div>
@@ -116,7 +116,7 @@
                           {{ csrf_field() }}
                           <div class="form-group">
                               <p>Are you sure want to delete this data?</p>
-                              <input type="hidden" class="form-control" name="materialId" id="mate_id">
+                              <input type="hidden" class="form-control" name="colorid" id="col_id">
                           </div>
                       </div>
                       <div class="modal-footer">
@@ -172,7 +172,7 @@
                             <td>{{ $no }}</td>
                             <td>{{ $color['name']}}</td>
                             <td></td>
-                            <td class="text-center"><button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEdit" data-colname="{{ $color['name']}}" data-colid="{{ $color['id']}}">Edit</button></td>
+                            <td class="text-center"><button class="btn btn-primary btn-sm" data-colid="{{ $color['id']}}" data-colname="{{ $color['name']}}" data-toggle="modal" data-target="#modalEdit" data-colname="{{ $color['name']}}" data-colid="{{ $color['id']}}">Edit</button></td>
                             <td class="text-center"><button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalDelete" data-colid="{{ $color['id']}}">Delete</button></td>
                         </tr>
                         <?php $no++ ?>
@@ -199,5 +199,26 @@
         $(document).ready(function() {
             $('#datatableProvinces').DataTable();
         });
+
+        $('#modalEdit').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var col_name = button.data('colname') // Extract info from data-* attributes
+            var col_id = button.data('colid')
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this)
+            modal.find('.modal-body #col_name').val(col_name)
+            modal.find('.modal-body #col_id').val(col_id)
+        })
+
+        $('#modalDelete').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var col_id = button.data('colid') // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this)
+            modal.find('.modal-body #col_id').val(col_id)
+        })
     </script>
+
 @endsection

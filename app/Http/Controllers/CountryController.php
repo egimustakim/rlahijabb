@@ -20,19 +20,19 @@ class CountryController extends Controller
     public function districts()
     {
         $districts = Districts::all();
-        return view ('admin/district', compact('districts'));
+        return view('admin/district', compact('districts'));
     }
 
     public function regencies()
     {
         $regencies = Regencies::all();
-        return view ('admin/regencie', compact('regencies'));
+        return view('admin/regencie', compact('regencies'));
     }
 
     public function villages()
     {
-        $villages = Villages::all();
-        return view ('admin/village', compact('villages'));
+        $villages = Villages::paginate(100);
+        return view('admin/village', compact('villages'));
     }
 
     public function regenciesjson()

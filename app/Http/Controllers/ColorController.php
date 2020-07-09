@@ -36,17 +36,23 @@ class ColorController extends Controller
      */
     public function store(Request $request)
     {
+        $count = Colors::where('name', '=' ,$request->colorname)->first();
+        if($count)
+        {
+            $request->session()->flash('alert-info', 'Color data exist');
+            return back();
+        }
         $color = New Colors;
-        $color->name = $request->colorName;
+        $color->name = $request->colorname;
         if ($color->save())
         {
             $request->session()->flash('alert-success', 'Color was successful added!');
-            return redirect('colors');
+            return back();
         }
         else
         {
             $request->session()->flash('alert-info', 'Color was failed added!');
-            return redirect('colors');
+            return back();
         }
     }
 
@@ -79,9 +85,26 @@ class ColorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $count = Colors::where('name', '=' ,$request->colorname)->first();
+        if($count)
+        {
+            $request->session()->flash('alert-info', 'Color data exist');
+            return back();
+        }
+        $color = Colors::findOrFail($request->colorid);
+        $color->name = $request->colorname;
+        if($color->update())
+        {
+            $request->session()->flash('alert-success', 'Color update success!');
+            return back();
+        }
+        else
+        {
+            $request->session()->flash('alert-info', 'Color update failed');
+            return back();
+        }
     }
 
     /**
@@ -90,8 +113,18 @@ class ColorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $color = Colors::findOrFail($request->colorid);
+        if($color->delete())
+        {
+            $request->session()->flash('alert-success', 'Delete data success!');
+            return back();
+        }
+        else
+        {
+            $request->session()->flash('alert-info', 'Delete data failed');
+            return back();
+        }
     }
 }

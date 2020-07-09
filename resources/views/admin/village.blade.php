@@ -98,7 +98,7 @@
                         @foreach ($villages as $vill)
                         <tr>
                             <td>{{ $no }}</td>
-                            <td>{{ $vill['name']}}</td>
+                            <td>{{ $vill['name'] }}</td>
                             <td class="text-center">Edit</td>
                             <td class="text-center">Delete</td>
                         </tr>
