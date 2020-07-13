@@ -14,6 +14,12 @@ return [
     |
     */
 
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT'),
+    ],
+
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),
@@ -43,11 +49,5 @@ return [
             'tolerance' => env('STRIPE_WEBHOOK_TOLERANCE', 300),
         ],
     ],
-
-    'google' => [
-        'client_id' => '641104741837-3fph0j2k47d9sanlgdj9couivelvk300.apps.googleusercontent.com',
-        'client_secret' => 'zDXVltYJP3PAzh3a2TvGfYfa',
-        'redirect' => 'http://127.0.0.1:8000/callback/google',
-      ],
 
 ];

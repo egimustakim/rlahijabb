@@ -26,6 +26,7 @@ Route::get('customer-profile', function () {
 });
 
 Route::get('/auth/redirect/{provider}', 'SocialController@redirect');
+
 Route::get('/callback/{provider}', 'SocialController@callback');
 
 //back-end

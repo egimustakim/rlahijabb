@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Validator,Redirect,Response,File;
 use Socialite;
@@ -23,22 +24,25 @@ class SocialController extends Controller
 
         auth()->login($user);
 
+        // return Socialite::with($provider)->redirect('customer-profile');
+
         return redirect()->to('/customer-profile');
 
     }
 
     function createUser($getInfo,$provider){
 
-    $customer = Customers::where('provider_id', $getInfo->id)->first();
+    $customers = Customers::where('provider_id', $getInfo->id)->first();
 
-    if (!$customer) {
-        $customer = Customers::create([
-            'name'     => $getInfo->name,
-            'email'    => $getInfo->email,
-            'provider' => $provider,
-            'provider_id' => $getInfo->id
-        ]);
+    if (!$customers) {
+        $customers = new Customers;
+        $customers->name = $getInfo->name;
+        $customers->email = $getInfo->email;
+        $customers->provider = $provider;
+        $customers->provider_id = $getInfo->id;
+        $customers->remember_token = $getInfo->token;
+        $customers->save();
     }
-    return $customer;
+    return $customers;
     }
 }
