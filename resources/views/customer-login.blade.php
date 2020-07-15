@@ -42,7 +42,8 @@
                   <hr>
                   <div class="form-group text-center">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-sign-in"></i> Log in</button>
-                    <a href="{{ url('/auth/redirect/google') }}" class="btn btn-primary"><i class="fa fa-google"></i> Log in With Google</a>
+                    <a href="{{ url('/auth/redirect/google') }}" class="btn btn-primary"><i class="fa fa-google"></i> Google</a>
+                    <a href="{{ url('/auth/redirect/google') }}" class="btn btn-primary"><i class="fa fa-facebook"></i> Facebook</a>
                   </div>
                 </form>
               </div>
@@ -73,7 +74,8 @@
                   </div>
                   <div class="form-group text-center">
                     <button type="submit" class="btn btn-primary"><i class="icon-profile"></i> Register</button>
-                    <a href="{{ url('/auth/redirect/google') }}" class="btn btn-primary"><i class="fa fa-google"></i> Register With Google</a>
+                    <a href="{{ url('/auth/redirect/google') }}" class="btn btn-primary"><i class="fa fa-google"></i> Google</a>
+                    <a href="{{ url('/auth/redirect/google') }}" class="btn btn-primary"><i class="fa fa-facebook"></i> Facebook</a>
                   </div>
                 </form>
               </div>
